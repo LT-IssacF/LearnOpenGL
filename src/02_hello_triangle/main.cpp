@@ -16,7 +16,7 @@ const char *fragmentShaderSource =
     "out vec4 FragColor;\n"
     "void main() {\n"
     "   FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n"
-    "}\n";
+    "}\0";
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
