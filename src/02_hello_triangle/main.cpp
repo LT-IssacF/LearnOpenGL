@@ -16,7 +16,7 @@ const char *fragmentShaderSource =
     "out vec4 FragColor;\n"
     "void main() {\n"
     "   FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n"
-    "}\0";
+    "}\n";
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -54,7 +54,6 @@ int main() {
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
-    
     // check for shader compile errors
     GLint flag;
     char infoLog[512];
@@ -70,6 +69,7 @@ int main() {
     // check for shader compile errors
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &flag);
     if(!flag) {
+        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
     // link shaders
@@ -110,7 +110,7 @@ int main() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), static_cast<void*>(0));
     glEnableVertexAttribArray(0);
 
     // Unbind VBO but do not unbind EBO
