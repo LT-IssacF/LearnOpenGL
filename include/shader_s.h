@@ -1,5 +1,4 @@
 #include <glad/glad.h>
-#include <stb_image.h>
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -80,8 +79,8 @@ public:
         glUniform1f(glGetUniformLocation(ID, name.c_str()), value); 
     }
     //-------------------------------------------------------------------------
-    GLuint getUnifromColorLocation(const char *color) {
-        return glGetUniformLocation(ID, color);
+    GLuint getUniformLocation(const char *name) {
+        return glGetUniformLocation(ID, name);
     }
     // delete the program
     // ------------------------------------------------------------------------
