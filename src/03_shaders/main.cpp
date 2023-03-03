@@ -1,11 +1,5 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
-#include <cmath>
-
-const GLuint width = 800;
-const GLuint height = 600;#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <shader_s.h>
 #include <iostream>
 #include <cmath>
@@ -46,9 +40,6 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    // int width, height, nrChannels;
-    // unsigned char *data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
 
     GLFWwindow *window = glfwCreateWindow(width, height, "Shaders", NULL, NULL);
     if(window == NULL) {
