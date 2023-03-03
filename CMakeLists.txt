@@ -1,38 +1,31 @@
 cmake_minimum_required(VERSION 3.10)
 
+project(LearnOpenGL VERSION 1.0)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE Debug)
 
-set(TARGET_NAME LearnOpenGL)
+add_definitions(-DNOMINMAX)
 
-project(${TARGET_NAME})
+option(USE_GLFW "glfw" ON)
+option(USE_GLAD "glad" ON)
 
-set(01 src/01_hello_window)
-set(02 src/02_hello_triangle)
-set(03 src/03_shaders)
+add_subdirectory(include)
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/output)
+message(STATUS "glfw: " ${USE_GLFW})
+message(STATUS "glad: " ${USE_GLAD})
 
-# set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
+set(01 src/01_hello_window/main.cpp)
+set(02 src/02_hello_triangle/main.cpp)
+set(03 src/03_shaders/main.cpp)
+set(04 src/04_textures/main.cpp)
 
-# 头文件路径
-include_directories(include)
+add_executable(main ${03})
 
-# 库文件路径
-link_directories(lib)
-
-# 添加需要链接的库文件
-link_libraries(glad)
-link_libraries(glfw3)
-link_libraries(glfw3dll)
-
-message(STATUS "This is binary dir " ${${TARGET_NAME}_BINARY_DIR})
-message(STATUS "This is source dir " ${${TARGET_NAME}_SOURCE_DIR})
-
-# add_executable(main ${01}/main.cpp)
-# add_executable(main ${02}/main.cpp)
-add_executable(main ${03}/main.cpp)
-
-# 链接库到.exe上
-target_link_libraries(main glad)
-# target_link_libraries(main glfw3)
-target_link_libraries(main -lglfw3dll)
+target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(main PUBLIC glad)
+# 链接第三方库时需使用全名
+target_link_libraries(main PUBLIC ${CMAKE_SOURCE_DIR}/lib/libglfw3.a)
+target_link_libraries(main PUBLIC shader_s)
+target_link_libraries(main PUBLIC stb_image)
