@@ -5,8 +5,8 @@
 #include <iostream>
 #include <cmath>
 
-const GLuint window_width = 800;
-const GLuint window_height = 600;
+const GLuint _width = 800;
+const GLuint _height = 600;
 
 GLfloat mixValue = 0.2f;
 GLboolean discoStyle = false;
@@ -37,7 +37,7 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow *window = glfwCreateWindow(window_width, window_height, "Textures", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(_width, _height, "Textures", NULL, NULL);
     if(window == NULL) {
         std::cout << "Failed to create window" << std::endl;
         glfwTerminate();
@@ -85,10 +85,10 @@ int main() {
     glEnableVertexAttribArray(2);
 
     // gen texture obj
-    GLuint myTexture, myTexture2;
-    glGenTextures(1, &myTexture);
+    GLuint texture1, texture2;
+    glGenTextures(1, &texture1);
     // bind texture
-    glBindTexture(GL_TEXTURE_2D, myTexture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     // set the texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
@@ -111,12 +111,12 @@ int main() {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     } else {
-        std::cout << "Failed to load myTexture" << std::endl;
+        std::cout << "Failed to load texture1" << std::endl;
     } stbi_image_free(data);
 
     // texture2
-    glGenTextures(1, &myTexture2);
-    glBindTexture(GL_TEXTURE_2D, myTexture2);
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -127,7 +127,7 @@ int main() {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     } else {
-        std::cout << "Failed to load myTexture2" << std::endl;
+        std::cout << "Failed to load texture2" << std::endl;
     } stbi_image_free(data);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -135,8 +135,8 @@ int main() {
 
     myShader.use();
     // two ways to set uniforms
-    glUniform1i(myShader.getUniformLocation("myTexture"), 0);
-    myShader.setInt("myTexture2", 1);
+    glUniform1i(myShader.getUniformLocation("texture1"), 0);
+    myShader.setInt("texture2", 1);
     
 
     while(!glfwWindowShouldClose(window)) {
@@ -147,9 +147,9 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
         // draw
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, myTexture);
+        glBindTexture(GL_TEXTURE_2D, texture1);
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, myTexture2);
+        glBindTexture(GL_TEXTURE_2D, texture2);
 
         myShader.setFloat("mixValue", mixValue);
         myShader.setBool("discoStyle", discoStyle);
