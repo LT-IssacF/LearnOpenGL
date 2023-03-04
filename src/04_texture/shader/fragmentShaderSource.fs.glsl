@@ -4,13 +4,13 @@ out vec4 FragColor;
 in vec3 myColor;
 in vec2 TexCoord;
 
-uniform sampler2D myTexture;
-uniform sampler2D myTexture2;
+uniform sampler2D texture1;
+uniform sampler2D texture2;
 uniform float mixValue;
 uniform bool discoStyle;
 
 void main() {
-    FragColor = mix(texture(myTexture, TexCoord), texture(myTexture2, TexCoord), mixValue);
+    FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), mixValue);
     if(discoStyle) {
         FragColor = FragColor * vec4(myColor, 1.0f);
     }
