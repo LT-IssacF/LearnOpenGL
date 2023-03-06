@@ -8,3 +8,6 @@ target_link_libraries(shader_s PUBLIC glad)
 
 add_library(stb_image STATIC stb_image.cpp)
 target_include_directories(stb_image PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(camera STATIC camera.cpp)
+target_include_directories(camera PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
