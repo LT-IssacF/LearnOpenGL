@@ -4,9 +4,10 @@
 // defalut values
 const GLfloat _pitch = 0.0f,
               _yaw = -90.0f,
-              _fov = 60.0f,
+              _fov = 45.0f,
               _speed = 2.5f,
-              _sensitivity = 0.1f;
+              _sensitivity = 0.1f, // 当前类存在的一个问题就是，当光标已经移动到屏幕的边沿时，程序就无法再获得鼠标移动的参数了，也就无法再继续朝边沿的方向转动
+              _keyboardSensitivity = 25.0f; // 但可以通过QE按键部分解决（一般fps游戏都让准心始终保持在屏幕正中央）
 
 enum movement {
     FORWARD,
@@ -14,7 +15,11 @@ enum movement {
     LEFT,
     RIGHT,
     UP,
-    DOWN
+    DOWN,
+    LOOK_LEFT,
+    LOOK_RIGHT,
+    LOOK_UP,
+    LOOK_DOWN
 };
 
 class Camera {
@@ -29,7 +34,8 @@ public:
 
     GLfloat fov,
             speed,
-            sensitivity;
+            sensitivity,
+            keyboardSensitivity;
     Camera(const GLfloat &Pitch = _pitch, const GLfloat &Yaw = _yaw, const GLfloat &Fov = _fov, const GLfloat &Speed = _speed, const GLfloat &Sensitivity = _sensitivity); // default vectors constructor
     Camera(const GLfloat &posX, const GLfloat &posY, const GLfloat &posZ, const GLfloat &upX, const GLfloat &upY, const GLfloat &upZ, const GLfloat &Pitch = _pitch, const GLfloat &Yaw = _yaw); // given matrix
     glm::mat4 getViewMatrix();
@@ -42,9 +48,9 @@ private:
 
 Camera::Camera(const GLfloat &Pitch, const GLfloat &Yaw, const GLfloat &Fov, const GLfloat &Speed, const GLfloat &Sensitivity) :
 position(glm::vec3(0.0f, 0.0f, 5.0f)), worldUp(glm::vec3(0.0f, 1.0f, 0.0f)), front(glm::vec3(0.0f, 0.0f, -1.0f)) {
-    pitch = Pitch, yaw = Yaw, fov = Fov, speed = Speed, sensitivity = Sensitivity;
+    pitch = Pitch, yaw = Yaw, fov = Fov, speed = Speed, sensitivity = Sensitivity, keyboardSensitivity = _keyboardSensitivity;
     updateVectors();
-} Camera::Camera(const GLfloat &posX, const GLfloat &posY, const GLfloat &posZ, const GLfloat &upX, const GLfloat &upY, const GLfloat &upZ, const GLfloat &Pitch, const GLfloat &Yaw) : front(glm::vec3(0.0f, 0.0f, -1.0f)), fov(_fov), speed(_speed), sensitivity(_sensitivity) {
+} Camera::Camera(const GLfloat &posX, const GLfloat &posY, const GLfloat &posZ, const GLfloat &upX, const GLfloat &upY, const GLfloat &upZ, const GLfloat &Pitch, const GLfloat &Yaw) : front(glm::vec3(0.0f, 0.0f, -1.0f)), fov(_fov), speed(_speed), sensitivity(_sensitivity), keyboardSensitivity(_keyboardSensitivity) {
     position = glm::vec3(posX, posY, posZ);
     worldUp = glm::vec3(upX, upY, upZ);
     pitch = Pitch, yaw = Yaw;
@@ -65,6 +71,18 @@ position(glm::vec3(0.0f, 0.0f, 5.0f)), worldUp(glm::vec3(0.0f, 1.0f, 0.0f)), fro
         position += up * velocity * 0.8f;
     } else if(move == DOWN) {
         position -= up * velocity * 0.8f;
+    } else if(move == LOOK_LEFT) {
+        processMouseMovement(-velocity * keyboardSensitivity / sensitivity, 0.0f);
+        updateVectors();
+    } else if(move == LOOK_RIGHT) {
+        processMouseMovement(velocity * keyboardSensitivity / sensitivity, 0.0f);
+        updateVectors();
+    } else if(move == LOOK_UP) {
+        processMouseMovement(0.0f, velocity * keyboardSensitivity / sensitivity);
+        updateVectors();
+    } else if(move == LOOK_DOWN) {
+        processMouseMovement(0.0f, -velocity * keyboardSensitivity / sensitivity);
+        updateVectors();
     } // 暂时不会用类实现多键组合输入
 } void Camera::processMouseMovement(GLfloat offsetX, GLfloat offsetY) {
     offsetX *= sensitivity, offsetY *= sensitivity; // 根据鼠标移动的偏移量计算俯仰角和偏航角
