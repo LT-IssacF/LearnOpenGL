@@ -39,8 +39,8 @@ int main() {
         return 0;
     } glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
     Shader myShader("../src/07_camera/shader/vertexShaderSource.vs.glsl", "../src/07_camera/shader/fragmentShaderSource.fs.glsl");
@@ -87,12 +87,7 @@ int main() {
          0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
         -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-    };
-    GLuint indices[] = {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
-    };
-    GLuint VAO, VBO;
+    }; GLuint VAO, VBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
@@ -237,9 +232,17 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
         } else if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
             // cameraPos += 0.8f * cameraSpeed * cameraUp;
             myCamera.processKeyboard(UP, deltaTime);
-        } else if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
+        } else if(glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
             // cameraPos -= 0.8f * cameraSpeed * cameraUp;
             myCamera.processKeyboard(DOWN, deltaTime);
+        } else if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+            myCamera.processKeyboard(LOOK_LEFT, deltaTime);
+        } else if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+            myCamera.processKeyboard(LOOK_RIGHT, deltaTime);
+        } else if(glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) { // key P
+            myCamera.processKeyboard(LOOK_UP, deltaTime);
+        } else if(glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) { // key L
+            myCamera.processKeyboard(LOOK_DOWN, deltaTime);
         }
     }
 }
