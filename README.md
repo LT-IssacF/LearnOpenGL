@@ -6,3 +6,4 @@
 [yocover](https://github.com/yocover)
 ![image](https://github.com/LT-IssacF/LearnOpenGL/blob/main/image/14_lighting_maps.png)
 ![image](https://github.com/LT-IssacF/LearnOpenGL/blob/main/image/15_multi_lights.png)
+![image](https://github.com/LT-IssacF/LearnOpenGL/blob/main/image/14_emission_map.png)
