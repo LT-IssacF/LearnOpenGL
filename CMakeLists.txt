@@ -25,10 +25,16 @@ set(04 src/04_textures/main.cpp)
 set(05 src/05_transformations/main.cpp)
 set(06 src/06_coordinates_system/main.cpp)
 set(07 src/07_camera/main.cpp)
+set(11 src/11_colors/main.cpp)
+set(12 src/12_basic_lighting/main.cpp)
+set(13 src/13_materials/main.cpp)
+set(14 src/14_lighting_maps/main.cpp)
+set(15 src/15_multi_lights/main.cpp)
 
-add_executable(main ${07})
+add_executable(main ${15})
 
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(main PUBLIC glad)
 # 链接第三方库时需使用全名
-target_link_libraries(main PUBLIC ${CMAKE_SOURCE_DIR}/lib/libglfw3.a shader_s stb_image camera)
+target_link_libraries(main PUBLIC ${CMAKE_SOURCE_DIR}/lib/libglfw3.a)
+target_link_libraries(main PUBLIC shader_s stb_image camera)
