@@ -1,7 +1,7 @@
 #version 330 core
 #define _POINT_LIGHTS 4
 // uniform sampler2D texture_diffuse1;
-struct Material { // 不知道每个具体的模型到底有几个纹理材质，所以就索性只给漫反射和镜面反射各配一个，改这个也得去mesh.cpp下面改
+struct Material { // 由于不确定网格到底有几个纹理，所以就干脆各自只定义一个，此处变动，mesh.cpp下对应也需要改
     sampler2D texture_diffuse1;
     // sampler2D texture_diffuse2;
     // sampler2D texture_diffuse3;
