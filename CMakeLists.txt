@@ -1,59 +1,18 @@
-# cmake_minimum_required(VERSION 3.10)
-
-# set(CMAKE_BUILD_TYPE Debug)
-
-# set(TARGET_NAME LearnOpenGL)
-
-# project(${TARGET_NAME})
-
-# set(01 src/01_hello_window)
-# set(02 src/02_hello_triangle)
-# set(03 src/03_shaders)
-
-# # set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
-
-# # 头文件路径
-# include_directories(include)
-
-# # 库文件路径
-# link_directories(lib)
-
-# # 添加需要链接的库文件
-# link_libraries(glad)
-# link_libraries(glfw3)
-# link_libraries(glfw3dll)
-
-# message(STATUS "This is binary dir " ${${TARGET_NAME}_BINARY_DIR})
-# message(STATUS "This is source dir " ${${TARGET_NAME}_SOURCE_DIR})
-
-# # add_executable(main ${01}/main.cpp)
-# # add_executable(main ${02}/main.cpp)
-# add_executable(main ${03}/main.cpp)
-
-# # 链接库到.exe上
-# target_link_libraries(main glad)
-# # target_link_libraries(main glfw3)
-# target_link_libraries(main -lglfw3dll)
-
 cmake_minimum_required(VERSION 3.10)
-
 project(LearnOpenGL VERSION 1.0)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE Debug)
-
 add_definitions(-DNOMINMAX)
 
 option(GLFW "glfw" ON)
 option(GLAD "glad" ON)
 option(GLM "glm" ON)
-
-add_subdirectory(include)
-
 message(STATUS "glfw: " ${GLFW})
 message(STATUS "glad: " ${GLAD})
 message(STATUS "glm: " ${GLM})
+
+add_subdirectory(include)
 
 set(01 src/01_hello_window/main.cpp)
 set(02 src/02_hello_triangle/main.cpp)
