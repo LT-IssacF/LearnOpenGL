@@ -1,3 +1,40 @@
+# cmake_minimum_required(VERSION 3.10)
+
+# set(CMAKE_BUILD_TYPE Debug)
+
+# set(TARGET_NAME LearnOpenGL)
+
+# project(${TARGET_NAME})
+
+# set(01 src/01_hello_window)
+# set(02 src/02_hello_triangle)
+# set(03 src/03_shaders)
+
+# # set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
+
+# # 头文件路径
+# include_directories(include)
+
+# # 库文件路径
+# link_directories(lib)
+
+# # 添加需要链接的库文件
+# link_libraries(glad)
+# link_libraries(glfw3)
+# link_libraries(glfw3dll)
+
+# message(STATUS "This is binary dir " ${${TARGET_NAME}_BINARY_DIR})
+# message(STATUS "This is source dir " ${${TARGET_NAME}_SOURCE_DIR})
+
+# # add_executable(main ${01}/main.cpp)
+# # add_executable(main ${02}/main.cpp)
+# add_executable(main ${03}/main.cpp)
+
+# # 链接库到.exe上
+# target_link_libraries(main glad)
+# # target_link_libraries(main glfw3)
+# target_link_libraries(main -lglfw3dll)
+
 cmake_minimum_required(VERSION 3.10)
 
 project(LearnOpenGL VERSION 1.0)
@@ -30,11 +67,23 @@ set(12 src/12_basic_lighting/main.cpp)
 set(13 src/13_materials/main.cpp)
 set(14 src/14_lighting_maps/main.cpp)
 set(15 src/15_multi_lights/main.cpp)
+set(21 src/21_assimp/main.cpp)
+set(31 src/31_stencil_test/main.cpp)
+set(32 src/32_blending/main.cpp)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/output)
+set(CMAKE_INSTALL_RPATH ${CMAKE_SOURCE_DIR}/output)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 
-add_executable(main ${15})
+add_executable(main ${breakout})
 
 target_include_directories(main PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(main PUBLIC glad)
 # 链接第三方库时需使用全名
 target_link_libraries(main PUBLIC ${CMAKE_SOURCE_DIR}/lib/libglfw3.a)
-target_link_libraries(main PUBLIC shader_s stb_image camera)
+# target_link_libraries(main PUBLIC ${CMAKE_SOURCE_DIR}/output/libassimp.dll)
+# 1 ~ 15
+# target_link_libraries(main PUBLIC shader_s stb_image camera)
+# 21
+# target_link_libraries(main PUBLIC shader stb_image camera model)
+# 31 <=
+# target_link_libraries(main PUBLIC shader stb_image camera)
